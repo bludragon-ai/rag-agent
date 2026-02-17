@@ -1,0 +1,100 @@
+Python Best Practices for Production Code
+==========================================
+
+1. Project Structure
+---------------------
+A well-organized Python project should follow a clear structure:
+
+- Use a src/ layout to separate source code from configuration
+- Keep tests in a dedicated tests/ directory
+- Include a pyproject.toml or setup.py for packaging
+- Use requirements.txt or Poetry for dependency management
+- Always include a comprehensive README.md
+
+Example structure:
+    project/
+    ├── src/
+    │   └── mypackage/
+    │       ├── __init__.py
+    │       ├── core/
+    │       └── utils/
+    ├── tests/
+    ├── docs/
+    ├── Dockerfile
+    ├── requirements.txt
+    └── README.md
+
+2. Code Quality
+----------------
+- Follow PEP 8 style guidelines consistently
+- Use type hints (PEP 484) for function signatures and variables
+- Write docstrings for all public modules, classes, and functions (PEP 257)
+- Keep functions small and focused (Single Responsibility Principle)
+- Use meaningful variable and function names
+- Prefer composition over inheritance
+
+3. Error Handling
+------------------
+- Use specific exception types rather than bare except clauses
+- Create custom exceptions for domain-specific errors
+- Use context managers (with statements) for resource management
+- Log errors with appropriate severity levels
+- Fail fast and fail loudly in development; handle gracefully in production
+
+4. Testing
+-----------
+- Write unit tests for all business logic
+- Use pytest as your testing framework
+- Aim for at least 80% code coverage
+- Use fixtures and parametrize for DRY tests
+- Include integration tests for external dependencies
+- Mock external services in unit tests
+
+5. Configuration Management
+----------------------------
+- Use environment variables for secrets and deployment-specific config
+- Use pydantic-settings for typed configuration with validation
+- Never hardcode secrets or API keys
+- Provide .env.example files for documentation
+- Support multiple environments (dev, staging, production)
+
+6. Dependency Management
+-------------------------
+- Pin major versions in requirements.txt
+- Use virtual environments (venv or conda)
+- Regularly audit dependencies for security vulnerabilities
+- Minimize the number of dependencies
+- Prefer well-maintained, popular packages
+
+7. Logging
+-----------
+- Use Python's built-in logging module
+- Configure structured logging for production
+- Use appropriate log levels (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+- Include contextual information in log messages
+- Never log sensitive information (passwords, API keys)
+
+8. Docker Best Practices
+-------------------------
+- Use slim base images (python:3.12-slim)
+- Use multi-stage builds to reduce image size
+- Don't run containers as root
+- Include health checks
+- Use .dockerignore to exclude unnecessary files
+- Pin base image versions
+
+9. Documentation
+-----------------
+- Write a comprehensive README with setup instructions
+- Include architecture diagrams for complex systems
+- Document API endpoints and data models
+- Keep documentation close to the code
+- Use docstrings that tools like Sphinx can consume
+
+10. Performance
+----------------
+- Profile before optimizing
+- Use generators for large data processing
+- Consider async/await for I/O-bound operations
+- Cache expensive computations (functools.lru_cache)
+- Use appropriate data structures (defaultdict, deque, etc.)
