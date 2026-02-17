@@ -21,6 +21,11 @@ class LLMProvider(str, Enum):
     OLLAMA = "ollama"
 
 
+class EmbeddingProvider(str, Enum):
+    HUGGINGFACE = "huggingface"
+    OPENAI = "openai"
+
+
 class VectorStoreBackend(str, Enum):
     CHROMA = "chroma"
     FAISS = "faiss"
@@ -51,7 +56,8 @@ class Settings(BaseSettings):
     ollama_model: str = "llama3"
 
     # Embeddings
-    embedding_model: str = "text-embedding-3-small"
+    embedding_provider: EmbeddingProvider = EmbeddingProvider.HUGGINGFACE
+    embedding_model: str = "all-MiniLM-L6-v2"
 
     # Vector store
     vector_store: VectorStoreBackend = VectorStoreBackend.CHROMA

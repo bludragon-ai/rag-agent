@@ -45,7 +45,8 @@ A production-quality **Retrieval-Augmented Generation** agent that lets you uplo
 
 ### Prerequisites
 - Python 3.12+
-- An OpenAI API key (or Anthropic / local Ollama)
+- An LLM API key (OpenAI, Anthropic, or local Ollama)
+- **No API key needed for embeddings** — uses local HuggingFace model by default
 
 ### 1. Clone & Install
 
@@ -100,10 +101,21 @@ All settings are controlled via environment variables (see [`.env.example`](.env
 | `LLM_PROVIDER` | `openai` | LLM backend: `openai`, `anthropic`, `ollama` |
 | `OPENAI_API_KEY` | — | Your OpenAI API key |
 | `OPENAI_MODEL` | `gpt-4o-mini` | OpenAI model to use |
+| `EMBEDDING_PROVIDER` | `huggingface` | Embedding backend: `huggingface` (local) or `openai` |
+| `EMBEDDING_MODEL` | `all-MiniLM-L6-v2` | Embedding model name |
 | `VECTOR_STORE` | `chroma` | Vector store: `chroma` or `faiss` |
 | `CHUNK_SIZE` | `1000` | Document chunk size (characters) |
 | `CHUNK_OVERLAP` | `200` | Overlap between chunks |
 | `RETRIEVAL_TOP_K` | `4` | Number of chunks retrieved per query |
+
+### Using with Anthropic (no OpenAI key needed)
+
+```bash
+# Set in .env:
+LLM_PROVIDER=anthropic
+ANTHROPIC_API_KEY=sk-ant-your-key-here
+# Embeddings use local HuggingFace by default — no extra API key needed!
+```
 
 ### Using with Ollama (fully local, no API key needed)
 
@@ -114,8 +126,7 @@ ollama pull llama3
 # Set in .env:
 LLM_PROVIDER=ollama
 OLLAMA_MODEL=llama3
-# Note: You still need an OpenAI key for embeddings,
-# or swap to a local embedding model.
+# Embeddings use local HuggingFace by default — fully local, no API keys!
 ```
 
 ## 📁 Project Structure
