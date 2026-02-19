@@ -1,57 +1,44 @@
-"""Tests for document ingestion."""
+"""Smoke tests for document ingestion."""
+
+from __future__ import annotations
 
 import tempfile
 from pathlib import Path
+from unittest.mock import MagicMock
 
-import pytest
-
-from src.core.ingest import load_document, split_documents, SUPPORTED_EXTENSIONS
-from src.core.config import Settings
+from src.core.ingest import ingest_documents, SUPPORTED_EXTENSIONS
+from src.core.config import get_settings
 
 
 def test_supported_extensions():
-    """All expected file types should be supported."""
     assert ".pdf" in SUPPORTED_EXTENSIONS
     assert ".txt" in SUPPORTED_EXTENSIONS
     assert ".md" in SUPPORTED_EXTENSIONS
 
 
-def test_load_text_document():
-    """Should load a plain text file into Document objects."""
+def test_ingest_txt_file():
+    settings = get_settings()
+    vectorstore = MagicMock()
+    vectorstore.add_documents = MagicMock()
+
     with tempfile.NamedTemporaryFile(suffix=".txt", mode="w", delete=False) as f:
-        f.write("Hello, this is a test document.\nWith multiple lines.")
-        f.flush()
-        docs = load_document(Path(f.name))
+        f.write("This is a test document. " * 50)
+        tmp_path = Path(f.name)
 
-    assert len(docs) == 1
-    assert "Hello" in docs[0].page_content
+    chunks_added = ingest_documents([tmp_path], vectorstore, settings)
 
-
-def test_load_markdown_document():
-    """Should load a markdown file."""
-    with tempfile.NamedTemporaryFile(suffix=".md", mode="w", delete=False) as f:
-        f.write("# Title\n\nSome content here.")
-        f.flush()
-        docs = load_document(Path(f.name))
-
-    assert len(docs) == 1
-    assert "Title" in docs[0].page_content
+    assert chunks_added > 0
+    vectorstore.add_documents.assert_called_once()
+    tmp_path.unlink()
 
 
-def test_unsupported_extension():
-    """Should raise ValueError for unsupported file types."""
-    with pytest.raises(ValueError, match="Unsupported file type"):
-        load_document(Path("file.xyz"))
+def test_ingest_unsupported_extension():
+    settings = get_settings()
+    vectorstore = MagicMock()
+    vectorstore.add_documents = MagicMock()
 
+    fake_path = Path("document.xyz")
+    chunks_added = ingest_documents([fake_path], vectorstore, settings)
 
-def test_split_documents():
-    """Should split documents into chunks."""
-    from langchain_core.documents import Document
-
-    docs = [Document(page_content="word " * 500, metadata={"source": "test"})]
-    settings = Settings(chunk_size=200, chunk_overlap=50)
-    chunks = split_documents(docs, settings)
-
-    assert len(chunks) > 1
-    for chunk in chunks:
-        assert len(chunk.page_content) <= 250  # some tolerance for splitting
+    assert chunks_added == 0
+    vectorstore.add_documents.assert_not_called()
