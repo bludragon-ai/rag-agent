@@ -6,6 +6,10 @@ A production-quality **Retrieval-Augmented Generation** agent that lets you uplo
 [![LangChain](https://img.shields.io/badge/LangChain-0.3-green.svg)](https://python.langchain.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
+## Demo
+
+![RAG Agent Screenshot](docs/screenshot.png)
+
 ---
 
 ## ✨ Features
