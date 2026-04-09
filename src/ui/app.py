@@ -30,6 +30,124 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+# ─── Portfolio Theme ────────────────────────────────────────────────────────
+
+st.markdown("""
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    /* Global */
+    .stApp { background-color: #000000; }
+    html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
+
+    /* Sidebar */
+    [data-testid="stSidebar"] {
+        background-color: #0a0a0a;
+        border-right: 1px solid rgba(255,255,255,0.06);
+    }
+    [data-testid="stSidebar"] .stMarkdown h1,
+    [data-testid="stSidebar"] .stMarkdown h2,
+    [data-testid="stSidebar"] .stMarkdown h3 {
+        font-family: 'JetBrains Mono', monospace;
+        color: #d4a853;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        font-weight: 500;
+    }
+
+    /* Main title */
+    .stApp h1 {
+        color: white;
+        font-weight: 700;
+    }
+
+    /* Subtitle/description text */
+    .stApp .stMarkdown p {
+        color: #a3a3a3;
+    }
+
+    /* Chat input */
+    [data-testid="stChatInput"] textarea {
+        background-color: #111111 !important;
+        border: 1px solid rgba(255,255,255,0.08) !important;
+        color: #e5e5e5 !important;
+        font-family: 'Inter', sans-serif !important;
+    }
+    [data-testid="stChatInput"] textarea:focus {
+        border-color: rgba(212,168,83,0.3) !important;
+    }
+
+    /* Buttons */
+    .stButton > button {
+        background-color: rgba(212,168,83,0.1);
+        color: #d4a853;
+        border: 1px solid rgba(212,168,83,0.3);
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        transition: all 0.3s;
+    }
+    .stButton > button:hover {
+        background-color: rgba(212,168,83,0.2);
+        border-color: rgba(212,168,83,0.5);
+    }
+
+    /* File uploader */
+    [data-testid="stFileUploader"] {
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 12px;
+    }
+
+    /* Tables */
+    .stTable, .stDataFrame {
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 12px;
+        overflow: hidden;
+    }
+    .stTable th {
+        background-color: #111111;
+        color: #d4a853;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+    }
+    .stTable td {
+        background-color: #0a0a0a;
+        color: #a3a3a3;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.8rem;
+        border-top: 1px solid rgba(255,255,255,0.04);
+    }
+
+    /* Divider */
+    hr { border-color: rgba(255,255,255,0.06) !important; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #000000; }
+    ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+
+    /* Chat messages */
+    [data-testid="stChatMessage"] {
+        background-color: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 12px;
+    }
+
+    /* Metric styling */
+    [data-testid="stMetric"] label {
+        font-family: 'JetBrains Mono', monospace;
+        color: #d4a853;
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+    }
+</style>
+""", unsafe_allow_html=True)
+
 # ─── Initialization ─────────────────────────────────────────────────────────
 
 
@@ -99,6 +217,7 @@ with st.sidebar:
 
 # ─── Main: Chat Interface ───────────────────────────────────────────────────
 
+st.markdown('<p style="font-family: JetBrains Mono, monospace; color: #d4a853; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 0;">Interactive Demo</p>', unsafe_allow_html=True)
 st.title("🔍 RAG Agent")
 st.caption("Ask questions about your documents. Answers include source citations.")
 
