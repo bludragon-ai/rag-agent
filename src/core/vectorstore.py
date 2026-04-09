@@ -35,7 +35,18 @@ def build_vectorstore(settings: Settings, embeddings) -> VectorStore:
                 allow_dangerous_deserialization=True,
             )
         logger.info("Creating new FAISS index")
-        return FAISS.from_texts(["__placeholder__"], embeddings)
+        import faiss
+        import numpy as np
+        dim = len(embeddings.embed_query("test"))
+        index = faiss.IndexFlatL2(dim)
+        from langchain_community.vectorstores import FAISS as FAISSStore
+        from langchain_community.docstore.in_memory import InMemoryDocstore
+        return FAISSStore(
+            embedding_function=embeddings,
+            index=index,
+            docstore=InMemoryDocstore({}),
+            index_to_docstore_id={},
+        )
 
     raise ValueError(f"Unknown vector store backend: {settings.vector_store}")
 

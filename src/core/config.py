@@ -50,7 +50,7 @@ class Settings(BaseSettings):
 
     # Anthropic
     anthropic_api_key: str = ""
-    anthropic_model: str = "claude-3-haiku-20240307"
+    anthropic_model: str = "claude-haiku-4-5-20251001"
 
     # Ollama
     ollama_base_url: str = "http://localhost:11434"

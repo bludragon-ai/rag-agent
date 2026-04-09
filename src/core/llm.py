@@ -35,7 +35,7 @@ def build_llm(settings: Settings) -> BaseChatModel:
 
     if settings.llm_provider == LLMProvider.OLLAMA:
         logger.info("Using Ollama LLM: %s", settings.ollama_model)
-        from langchain_community.chat_models import ChatOllama
+        from langchain_ollama import ChatOllama
         return ChatOllama(
             base_url=settings.ollama_base_url,
             model=settings.ollama_model,

@@ -7,6 +7,7 @@ with source citations.
 
 from __future__ import annotations
 
+import shutil
 import tempfile
 from pathlib import Path
 
@@ -72,6 +73,9 @@ with st.sidebar:
             # Ingest
             num_chunks = ingest_documents(file_paths, vectorstore, settings)
             save_faiss_index(vectorstore, settings)
+
+            # Clean up temp files
+            shutil.rmtree(temp_dir)
 
         st.success(f"✅ Indexed **{num_chunks}** chunks from **{len(file_paths)}** file(s).")
 
